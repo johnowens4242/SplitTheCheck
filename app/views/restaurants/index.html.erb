@@ -2,13 +2,19 @@
 
 <h1>Restaurants</h1>
 
+<%= link_to 'Add Restaurant', new_restaurant_path %>
+
+<%= form_with url: "/restaurants", method: :get do |form| %>
+  <%= form.label :name, "Search for: Restaurants" %>
+  <%= form.text_field :name %>
+  <%= form.submit "Search" %>
+<% end %>
+
 <table>
   <thead>
     <tr>
       <th>Name</th>
       <th>Location</th>
-      <th>Countwillsplit</th>
-      <th>Countwillnotsplit</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -28,5 +34,3 @@
 </table>
 
 <br>
-
-<%= link_to 'New Restaurant', new_restaurant_path %>

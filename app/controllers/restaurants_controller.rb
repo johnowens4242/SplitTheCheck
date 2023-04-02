@@ -3,7 +3,31 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    @restaurants = Restaurant.all
+    if (params[:name].nil?)
+        @restaurants = Restaurant.all
+      else
+        @restaurants = Restaurant.where(name: params[:name])
+    end
+
+
+  end
+
+  def willSplit
+    set_restaurant
+
+    @restaurant.countWillSplit = @restaurant.countWillSplit + 1
+    @restaurant.save
+
+    redirect_to(restaurants_url)
+  end
+
+  def willNotSplit
+    set_restaurant
+
+    @restaurant.countWillNotSplit = @restaurant.countWillNotSplit + 1
+    @restaurant.save
+
+    redirect_to(restaurants_url)
   end
 
   # GET /restaurants/1 or /restaurants/1.json
