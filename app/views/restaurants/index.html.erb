@@ -7,11 +7,12 @@
 <h1>Restaurants</h1>
 
 <%= form_with url: "/restaurants", method: :get do |form| %>
-  <%= form.label :name, "Search for: Restaurants" %>
+  <h3>Name</h3>
   <%= form.text_field :name %>
+  <h3>Location</h3>
+  <%= form.text_field :location %>
   <%= form.submit "Search" %>
 <% end %>
-
 <%= link_to 'Add Restaurant', new_restaurant_path %>
 
 <table>
@@ -34,6 +35,8 @@
         <td><%= restaurant.location %></td>
         <td><%= restaurant.countWillNotSplit %></td>
         <td><%= link_to 'Will Not Split', restaurants_will_not_split_path(restaurant) %></td>
+        <td><%= link_to 'Show', restaurant %></td>
+        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
       </tr>
     <% end %>
   </tbody>

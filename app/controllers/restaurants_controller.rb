@@ -3,13 +3,25 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    if (params[:name].nil?)
+    if ((params[:name].nil? or params[:name] == "") and (params[:location].nil? or params[:location] == ""))
         @restaurants = Restaurant.all
-      else
+        logger.info("all")
+      elsif (!params[:location].nil? and (params[:name].nil? or params[:name] == ""))
+        @restaurants = Restaurant.where(location: params[:location])
+        logger.info("location only search")
+        logger.info(params[:name])
+        logger.info(params[:location])
+      elsif (!params[:name].nil? and (params[:location].nil? or params[:location] == ""))
         @restaurants = Restaurant.where(name: params[:name])
+        logger.info("name only search")
+        logger.info(params[:name])
+        logger.info(params[:location])
+      else
+        @restaurants = Restaurant.where(name: params[:name], location: params[:location])
+        logger.info("both")
+        logger.info(params[:name])
+        logger.info(params[:location])
     end
-
-
   end
 
   def willSplit
@@ -49,7 +61,7 @@ class RestaurantsController < ApplicationController
 
     respond_to do |format|
       if @restaurant.save
-        format.html { redirect_to restaurants_url, notice: "Restaurant was successfully created." }
+        format.html { redirect_to restaurant_url(@restaurant), notice: "Restaurant was successfully created." }
         format.json { render :show, status: :created, location: @restaurant }
       else
         format.html { render :new, status: :unprocessable_entity }
