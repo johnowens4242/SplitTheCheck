@@ -3,6 +3,10 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    end
+
     if ((params[:name].nil? or params[:name] == "") and (params[:location].nil? or params[:location] == ""))
         @restaurants = Restaurant.all
         logger.info("all")

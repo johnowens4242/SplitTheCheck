@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
+  root to: "restaurants#index"
   get "restaurants/:id/willSplit", to: "restaurants#willSplit", as: "restaurants_will_split"
   get "restaurants/:id/willNotSplit", to: "restaurants#willNotSplit", as: "restaurants_will_not_split"
   resources :restaurants, except: [:destroy]
