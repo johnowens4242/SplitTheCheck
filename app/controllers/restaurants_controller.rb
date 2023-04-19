@@ -3,9 +3,6 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants or /restaurants.json
   def index
-    if (!user_signed_in?)
-      redirect_to(new_user_registration_path)
-    end
 
     if ((params[:name].nil? or params[:name] == "") and (params[:location].nil? or params[:location] == ""))
         @restaurants = Restaurant.all
@@ -29,21 +26,29 @@ class RestaurantsController < ApplicationController
   end
 
   def willSplit
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
     set_restaurant
 
     @restaurant.countWillSplit = @restaurant.countWillSplit + 1
     @restaurant.save
 
     redirect_to(restaurants_url)
+    end
   end
 
   def willNotSplit
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
     set_restaurant
 
     @restaurant.countWillNotSplit = @restaurant.countWillNotSplit + 1
     @restaurant.save
 
     redirect_to(restaurants_url)
+    end
   end
 
   # GET /restaurants/1 or /restaurants/1.json
@@ -52,6 +57,10 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/new
   def new
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    end
+
     @restaurant = Restaurant.new
   end
 
