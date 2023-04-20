@@ -6,21 +6,44 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     @restaurant = restaurants(:one)
   end
 
-  test "should get index" do
+  test "should get index when signed in" do
+    get restaurants_url
+    assert_response :success
+  end
+
+  test "should get index when signed out" do
     sign_out users(:one)
 
     get restaurants_url
     assert_response :success
   end
 
-  test "should get new" do
+  test "should get new when signed in" do
     get new_restaurant_url
     assert_response :success
   end
 
-  test "should get willSplit" do
+  test "should not get new when signed out" do
+    sign_out users(:one)
+    get new_restaurant_url
+    assert_response :redirect
+  end
+
+  test "should not get willSplit when signed out" do
+    sign_out users(:one)
+    get restaurants_will_split_path(@restaurant)
+    assert_redirected_to new_user_registration_path
+  end
+
+  test "should get willSplit when signed in" do
     get restaurants_will_split_path(@restaurant)
     assert_redirected_to restaurants_url
+  end
+
+  test "should not get willNotSplit when signed out" do
+    sign_out users(:one)
+    get restaurants_will_not_split_path(@restaurant)
+    assert_redirected_to new_user_registration_path
   end
 
   test "should get willNotSplit" do
@@ -36,7 +59,12 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to restaurant_url(Restaurant.last)
   end
 
-  test "should show restaurant" do
+  test "should show restaurant when signed in" do
+    get restaurant_url(@restaurant)
+    assert_response :success
+  end
+
+  test "should show restaurant when signed out" do
     sign_out users(:one)
 
     get restaurant_url(@restaurant)
