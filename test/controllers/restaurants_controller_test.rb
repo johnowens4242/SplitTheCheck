@@ -2,10 +2,13 @@ require "test_helper"
 
 class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   setup do
+    sign_in users(:one)
     @restaurant = restaurants(:one)
   end
 
   test "should get index" do
+    sign_out users(:one)
+
     get restaurants_url
     assert_response :success
   end
@@ -34,6 +37,8 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show restaurant" do
+    sign_out users(:one)
+
     get restaurant_url(@restaurant)
     assert_response :success
   end
