@@ -29,6 +29,9 @@ class RestaurantsController < ApplicationController
     if (!user_signed_in?)
       redirect_to(new_user_registration_path)
     else
+      @vote = current_user.votes.new(restaurant_id: params[:id], willSplit: true)
+      @vote.save
+
     set_restaurant
 
     @restaurant.countWillSplit = @restaurant.countWillSplit + 1
@@ -43,6 +46,9 @@ class RestaurantsController < ApplicationController
       redirect_to(new_user_registration_path)
     else
     set_restaurant
+
+    @vote = current_user.votes.new(restaurant_id: params[:id], willSplit: false)
+    @vote.save
 
     @restaurant.countWillNotSplit = @restaurant.countWillNotSplit + 1
     @restaurant.save

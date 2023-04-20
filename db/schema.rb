@@ -36,10 +36,10 @@ ActiveRecord::Schema.define(version: 2023_04_18_225851) do
   create_table "votes", force: :cascade do |t|
     t.integer "user_id", null: false
     t.integer "restaurant_id", null: false
+    t.boolean "willSplit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["restaurant_id"], name: "index_votes_on_restaurant_id"
-    t.index ["user_id", "restaurant_id"], name: "index_votes_on_user_id_and_restaurant_id", unique: true
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
