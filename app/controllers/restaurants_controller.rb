@@ -34,7 +34,7 @@ class RestaurantsController < ApplicationController
 
     set_restaurant
 
-    @restaurant.countWillSplit = @restaurant.countWillSplit + 1
+    @restaurant.countWillSplit = Vote.where(restaurant: @restaurant, willSplit: true).count
     @restaurant.save
 
     redirect_to(restaurants_url)
@@ -50,7 +50,7 @@ class RestaurantsController < ApplicationController
     @vote = current_user.votes.new(restaurant_id: params[:id], willSplit: false)
     @vote.save
 
-    @restaurant.countWillNotSplit = @restaurant.countWillNotSplit + 1
+    @restaurant.countWillNotSplit = Vote.where(restaurant: @restaurant, willSplit: false).count
     @restaurant.save
 
     redirect_to(restaurants_url)
@@ -72,6 +72,10 @@ class RestaurantsController < ApplicationController
 
   # GET /restaurants/1/edit
   def edit
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
+    end
   end
 
   # POST /restaurants or /restaurants.json

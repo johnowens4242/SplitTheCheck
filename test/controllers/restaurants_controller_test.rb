@@ -71,9 +71,15 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
-  test "should get edit" do
+  test "should get edit when signed in" do
     get edit_restaurant_url(@restaurant)
     assert_response :success
+  end
+
+  test "should not get edit when signed out" do
+    sign_out users(:one)
+    get edit_restaurant_url(@restaurant)
+    assert_response :redirect
   end
 
   test "should update restaurant" do
