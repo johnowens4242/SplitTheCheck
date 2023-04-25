@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_25_015912) do
+ActiveRecord::Schema.define(version: 2023_04_25_230719) do
 
   create_table "comments", force: :cascade do |t|
     t.integer "user_id", null: false
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 2023_04_25_015912) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["restaurant_id"], name: "index_comments_on_restaurant_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "restaurant_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["restaurant_id"], name: "index_favorites_on_restaurant_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "restaurants", force: :cascade do |t|
@@ -55,6 +64,8 @@ ActiveRecord::Schema.define(version: 2023_04_25_015912) do
 
   add_foreign_key "comments", "restaurants"
   add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "restaurants"
+  add_foreign_key "favorites", "users"
   add_foreign_key "votes", "restaurants"
   add_foreign_key "votes", "users"
 end
