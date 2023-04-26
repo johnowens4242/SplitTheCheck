@@ -61,6 +61,9 @@ class RestaurantsController < ApplicationController
   def show
   end
 
+  def profile
+  end
+
   # GET /restaurants/new
   def new
     if (!user_signed_in?)

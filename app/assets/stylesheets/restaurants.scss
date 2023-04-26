@@ -57,6 +57,17 @@ tr:nth-child(odd) {
   background-color: #FFCC00;
 }
 
+.column {
+  float: left;
+  width: 33%;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
 #userMessage {
   border-style: inset;
   border-color: black;
