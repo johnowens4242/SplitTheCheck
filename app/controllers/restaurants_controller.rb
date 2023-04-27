@@ -57,11 +57,29 @@ class RestaurantsController < ApplicationController
     end
   end
 
+  def favorite
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
+    set_restaurant
+
+    @favorite = current_user.favorites.new(restaurant_id: params[:id])
+    @favorite.save
+
+    redirect_to(restaurants_url)
+    end
+  end
+
   # GET /restaurants/1 or /restaurants/1.json
   def show
   end
 
+  def comment
+  end
+
   def profile
+    #@restaurants = Vote.where(user: current_user).restaurant
+    @votes = Vote.where(user: current_user)
   end
 
   # GET /restaurants/new

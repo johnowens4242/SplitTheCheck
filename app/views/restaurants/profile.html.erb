@@ -5,7 +5,7 @@
 </header>
 
 <h1><%= current_user.email %></h1>
-
+<%= link_to 'Back', restaurants_path %>
 <div class="row">
         <div class="column">
             <h2>Comments</h2>
@@ -15,7 +15,22 @@
         </div>
         <div class="column">
             <h2>Votes</h2>
+            <table>
+              <% @votes.each do |vote| %>
+
+                <tr>
+                  <td><%= vote.created_at %></td>
+                  <td><%= vote.restaurant.name %></td>
+                  <td><%= vote.restaurant.location %></td>
+                  <% if vote.willSplit %>
+                  <td><p>will split</p></td>
+                  <% else %>
+                  <td><p>will not split</p></td>
+                  <% end %>
+                </tr>
+              <% end %>
+            </table>
+
         </div>
     </div>
-
 <%= link_to 'Back', restaurants_path %>
