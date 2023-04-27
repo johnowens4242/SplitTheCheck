@@ -12,6 +12,16 @@
         </div>
         <div class="column">
             <h2>Favorites</h2>
+            <table>
+              <% @favorites.each do |favorite| %>
+
+                <tr>
+                  <td><%= favorite.created_at %></td>
+                  <td><%= favorite.restaurant.name %></td>
+                  <td><%= favorite.restaurant.location %></td>
+                </tr>
+              <% end %>
+            </table>
         </div>
         <div class="column">
             <h2>Votes</h2>

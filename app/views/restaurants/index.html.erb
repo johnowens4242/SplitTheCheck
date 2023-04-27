@@ -37,7 +37,9 @@
         <td><%= link_to 'Will Not Split', restaurants_will_not_split_path(restaurant) %></td>
         <td><%= link_to 'Show', restaurant %></td>
         <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
+        <% if Favorite.where(user: current_user, restaurant: restaurant).count == 0 %>
         <td><%= link_to 'Favorite', restaurants_favorite_path(restaurant) %></td>
+        <% end %>
         <td><%= link_to 'Comments', restaurants_comment_path(restaurant) %></td>
       </tr>
     <% end %>

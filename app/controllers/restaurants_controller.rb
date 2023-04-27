@@ -75,11 +75,13 @@ class RestaurantsController < ApplicationController
   end
 
   def comment
+    set_restaurant
   end
 
   def profile
     #@restaurants = Vote.where(user: current_user).restaurant
     @votes = Vote.where(user: current_user)
+    @favorites = Favorite.where(user: current_user)
   end
 
   # GET /restaurants/new
