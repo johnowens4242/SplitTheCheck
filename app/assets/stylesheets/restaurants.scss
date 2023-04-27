@@ -53,13 +53,18 @@ td {
   padding: 5px;
 }
 
+tr {
+  max-height: auto;
+  overflow-wrap: break-word;
+}
+
 tr:nth-child(odd) {
   background-color: #FFCC00;
 }
 
 .column {
   float: left;
-  width: 33%;
+  width: 28%;
 }
 
 .row:after {
@@ -68,12 +73,13 @@ tr:nth-child(odd) {
   clear: both;
 }
 
-#userMessage {
-  border-style: inset;
-  border-color: black;
-  font-family: "Garamond", Times, serif;
-  font-size: 1.5em;
-  width: 20em;
+.userMessage {
+
+  max-width: 400px;
   overflow-wrap: break-word;
-  padding: 0.3em;
+  max-height: auto;
+}
+
+.date {
+  max-width: 90px;
 }

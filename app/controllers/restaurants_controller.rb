@@ -76,12 +76,26 @@ class RestaurantsController < ApplicationController
 
   def comment
     set_restaurant
+    @comments = Comment.where(restaurant: @restaurant)
+  end
+
+  def addComment
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
+      set_restaurant
+      @comment = current_user.comments.new(restaurant_id: params[:id], commentText: params[:commentText])
+      @comment.save
+      redirect_to(restaurants_comment_path)
+    end
+
   end
 
   def profile
     #@restaurants = Vote.where(user: current_user).restaurant
     @votes = Vote.where(user: current_user)
     @favorites = Favorite.where(user: current_user)
+    @comments = Comment.where(user: current_user)
   end
 
   # GET /restaurants/new
@@ -89,7 +103,6 @@ class RestaurantsController < ApplicationController
     if (!user_signed_in?)
       redirect_to(new_user_registration_path)
     end
-
     @restaurant = Restaurant.new
   end
 
@@ -104,7 +117,6 @@ class RestaurantsController < ApplicationController
   # POST /restaurants or /restaurants.json
   def create
     @restaurant = Restaurant.new(restaurant_params)
-
     respond_to do |format|
       if @restaurant.save
         format.html { redirect_to restaurant_url(@restaurant), notice: "Restaurant was successfully created." }

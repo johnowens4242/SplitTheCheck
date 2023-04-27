@@ -4,7 +4,23 @@
   <h1>Check Split Check</h1>
 </header>
 
-
+<%= form_with url: request.original_url + "_add", method: :get do |form| %>
+  <h3>New Comment</h3>
+  <%= form.text_field :commentText %>
+  <%= form.submit "Add" %>
+<% end %>
 
 <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <%= link_to 'Back', restaurants_path %>
+
+<table>
+  <% @comments.each do |comment| %>
+    <tr>
+      <td><%= comment.created_at %></td>
+      <td>Comment: </td>
+      <td><%= comment.commentText %></td>
+      <td>Commented by: </td>
+      <td><%= comment.user.email %></td>
+    </tr>
+  <% end %>
+</table>
