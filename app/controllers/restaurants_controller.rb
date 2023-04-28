@@ -76,7 +76,7 @@ class RestaurantsController < ApplicationController
 
   def comment
     set_restaurant
-    @comments = Comment.where(restaurant: @restaurant)
+    @comments = Comment.where(restaurant: @restaurant).reverse_order
   end
 
   def addComment
@@ -92,10 +92,14 @@ class RestaurantsController < ApplicationController
   end
 
   def profile
+    if (!user_signed_in?)
+      redirect_to(new_user_registration_path)
+    else
     #@restaurants = Vote.where(user: current_user).restaurant
-    @votes = Vote.where(user: current_user)
-    @favorites = Favorite.where(user: current_user)
-    @comments = Comment.where(user: current_user)
+    @votes = Vote.where(user: current_user).reverse_order
+    @favorites = Favorite.where(user: current_user).reverse_order
+    @comments = Comment.where(user: current_user).reverse_order
+  end
   end
 
   # GET /restaurants/new

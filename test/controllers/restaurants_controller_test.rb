@@ -6,6 +6,39 @@ class RestaurantsControllerTest < ActionDispatch::IntegrationTest
     @restaurant = restaurants(:one)
   end
 
+  test "should get comment when signed in" do
+    get restaurants_comment_url(@restaurant)
+    assert_response :success
+  end
+
+  test "should get comment when signed out" do
+    sign_out users(:one)
+    get restaurants_comment_url(@restaurant)
+    assert_response :success
+  end
+
+  test "should get commentAdd when signed in" do
+    get restaurants_comment_add_url(@restaurant)
+    assert_redirected_to restaurants_comment_url(@restaurant)
+  end
+
+  test "should not get commentAdd when signed out" do
+    sign_out users(:one)
+    get restaurants_comment_add_url(@restaurant)
+    assert_redirected_to new_user_registration_path
+  end
+
+  test "should get favorite when signed in" do
+    get restaurants_favorite_path(@restaurant)
+    assert_redirected_to restaurants_url
+  end
+
+  test "should not get favorite when signed out" do
+    sign_out users(:one)
+    get restaurants_favorite_path(@restaurant)
+    assert_redirected_to new_user_registration_path
+  end
+
   test "should get index when signed in" do
     get restaurants_url
     assert_response :success
